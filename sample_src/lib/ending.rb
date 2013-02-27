@@ -1,4 +1,4 @@
-ï»¿class Ending
+?¿class Ending
   attr_reader :closed
 
   def initialize

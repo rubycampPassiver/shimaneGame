@@ -29,6 +29,6 @@ Scene.set_scene(:title)
 
 #Sceneのインスタンスを切り替えながら表示
 Window.loop do
-  break if Input.keyPush?(K_ESCAPE)
-  Scene.play
+  break if (Input.keyPush?(K_ESCAPE) || Scene.get_finish)
+  Scene.play#シーンのplayメソッド呼び出し
 end

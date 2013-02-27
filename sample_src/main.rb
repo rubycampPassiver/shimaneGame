@@ -1,4 +1,4 @@
-ï»¿require 'dxruby'
+?¿require 'dxruby'
 
 require_relative 'lib/scene'
 require_relative 'lib/title'

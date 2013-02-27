@@ -1,4 +1,4 @@
-ï»¿class Title
+?¿class Title
   def initialize
     @bg_img = Image.load("images/title.png")
   end

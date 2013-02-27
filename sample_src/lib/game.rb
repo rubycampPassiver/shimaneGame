@@ -1,4 +1,4 @@
-ï»¿class Game
+?¿class Game
   def initialize
     @map = Map.new("sample1.dat")
   end

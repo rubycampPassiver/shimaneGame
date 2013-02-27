@@ -1,6 +1,9 @@
 class Scene
   @@scenes = {}
   @@current_scene_name = nil
+  
+  @@finish = false#ゲーム終了用のフラグ
+#  attr_accessor:finish
 
   def self.add_scene(name, obj)
     @@scenes[name.to_sym] = obj
@@ -13,4 +16,16 @@ class Scene
   def self.play
     @@scenes[@@current_scene_name].play
   end
+  
+  def self.get_finish
+    @@finish
+  end
+  
+  def self.set_finish(b)
+    @@finish = f
+  end
+  
+  #  def self.tofinish()
+  #    @@finish = true
+  #  end
 end

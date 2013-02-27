@@ -1,4 +1,4 @@
-ï»¿class Map
+?¿class Map
   def initialize(map_file)
     @chips = Image.loadToArray(File.join(File.dirname(__FILE__), "..", "images", "map_chips.png"), 4, 4)
     @map_data = []
