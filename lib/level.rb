@@ -1,4 +1,4 @@
-﻿class Level
+class Level
   def initialize
     @bg_img = Image.load("image/title.png")
   end
