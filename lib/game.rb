@@ -1,5 +1,5 @@
 ﻿class Game_tottori
-  def initialize
+   def initialize
     @bg_img = Image.load("image/game_bg.png")
 	@img_shimane = Image.load("image/shimane.png")
 	@img_tottori = Image.load("image/tottori.png")
