@@ -21,21 +21,16 @@ class Title
   end
 
   def play
-    #<<<<<<< HEAD
     Scene.set_scene(:level) if Input.keyPush?(K_SPACE)
-    Window.draw(0, 0, @bg_img)
-    #=======
 
-    #  Scene.set_scene(:game) if Input.keyPush?(K_SPACE)
     #オブジェクトの描画
-    Window.draw(0,0,@bg)
+    Window.draw(0, 0, @bg)
     @@img_start.draw
     @@img_level.draw
     @@img_end.draw
 	
     self.update
     @pt.draw
-    #>>>>>>> 11fc0134d48e9698f439289feb429cc069107d90
   end
 
 end
