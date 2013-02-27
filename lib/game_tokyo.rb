@@ -1,4 +1,6 @@
-﻿class Game_osaka
+﻿#coding: SJIS
+
+class Game_osaka
   def initialize
     @bg_img = Image.load("image/game_bg.png")
 	@img_shimane = Image.load("image/shimane.png")
