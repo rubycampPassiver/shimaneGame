@@ -1,3 +1,5 @@
+#ƒƒCƒ“•¶
+
 #dxruby‚ÌŒÄ‚Ño‚µ
 require 'dxruby'
 
