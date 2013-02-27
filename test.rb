@@ -1,1 +1,1 @@
-rwquire 'dxruby'
+rqui
