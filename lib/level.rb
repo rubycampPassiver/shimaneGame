@@ -1,6 +1,6 @@
 ﻿class Level
   def initialize
-    @bg_img = Image.load("images/title.png")
+    @bg_img = Image.load("image/title.png")
   end
 
   def play

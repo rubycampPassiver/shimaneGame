@@ -3,6 +3,13 @@
 #dxrubyの呼び出し
 require 'dxruby'
 
+
+Window.width = 800
+Window.height = 600
+
+#dxrubyの呼び出し
+require 'dxruby'
+
 #作成したクラス群の呼び出し
 require_relative 'lib/scene'
 require_relative 'lib/title'

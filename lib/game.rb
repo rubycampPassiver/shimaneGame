@@ -1,6 +1,6 @@
-﻿class Games
+﻿class Game
   def initialize
-    @bg_img = Image.load("images/game.png")
+    @bg_img = Image.load("image/game.png")
   end
 
   def play
