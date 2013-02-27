@@ -1,8 +1,8 @@
 class Title
   def initialize
-		if Input.mousePush?(P_BUTTON0) then
-		x = Input.
-		y = Input.M_LBUTTON
+		if Input.mouseDown?(M_LBUTTON) then
+		x = Input.mousePosX
+		y = Input.mousePosY
 		end
 	#オブジェクトの読み込み
     @bg =  Image.load(File.expand_path("../../image/title.png", __FILE__))
@@ -12,12 +12,10 @@ class Title
   end
 
   def update
-		if Input.mousePush?(P_BUTTON0) then
-		x = Input.
-		y = Input.M_LBUTTON
+		if Input.mouseDown?(M_LBUTTON) then
+		@pt.x = Input.mousePosX
+		@pt.y = Input.mousePosY
 		end
-	@pt.x = Input.mousePosX
-	@pt.y = Input.mousePosY
   end
 
   def play
