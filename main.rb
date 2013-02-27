@@ -17,7 +17,7 @@ require_relative 'lib/level'
 require_relative 'lib/game'
 
 #シーンのインスタンス化と命名
-game   = Game.new
+game   = Game_tottori.new
 level = Level.new
 title  = Title.new
 Scene.add_scene(:title,  title)
