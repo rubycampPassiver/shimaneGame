@@ -24,6 +24,7 @@ class Level
     
     Scene.set_scene(:Game_tottori) if Input.keyPush?(K_SPACE)#終了条件
     Window.draw(0,0,@bg_img)#バックグラウンドセット
+    click = Input.mouseDown?(M_LBUTTON) ? true : false    
     
     #擬似オブジェクトのセット
     @pt.x = Input.mousePosX  # マウスカーソルのx座標
@@ -36,8 +37,8 @@ class Level
     Sprite.draw(@alljp)#
     
     #ボタン処理（次の画面への遷移）
-    if Input.mouseDown?(M_LBUTTON) then
-      Scene.set_scene(:Game_tottori) unless @pt.check([@pref]).empty?
+    if click then 
+      Scene.set_scene(:game_tottori) unless @pt.check([@pref]).empty?
       Scene.set_scene(:game_osaka) unless @pt.check([@dist]).empty?
       Scene.set_scene(:game_tokyo) unless @pt.check([@alljp ]).empty?
     end
