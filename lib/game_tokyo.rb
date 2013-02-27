@@ -1,10 +1,10 @@
 ﻿#coding: SJIS
 
-class Game_osaka
+class Game_tokyo
   def initialize
     @bg_img = Image.load("image/game_bg.png")
 	@img_shimane = Image.load("image/shimane.png")
-	@img_tottori = Image.load("image/tokyo.png")
+	@img_tokyo = Image.load("image/tokyo.png")
     @tiji   = Image.load("image/tiji.png")
 
   end

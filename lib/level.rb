@@ -38,9 +38,9 @@ class Level
     
     #ボタン処理（次の画面への遷移）
     if click then 
-      Scene.set_scene(:game_tottori) unless @pt.check([@pref]).empty?
-      Scene.set_scene(:game_osaka) unless @pt.check([@dist]).empty?
-      Scene.set_scene(:game_tokyo) unless @pt.check([@alljp ]).empty?
+      Scene.set_scene(:tottori) unless @pt.check([@pref]).empty?
+      Scene.set_scene(:osaka) unless @pt.check([@dist]).empty?
+      Scene.set_scene(:tokyo) unless @pt.check([@alljp ]).empty?
     end
     #    puts "hit pref!" if Sprite.check(@pt,@pref) unless  @smbit.check([@pref]).empty?
     #    puts "hit dist!" if Sprite.check(@pt,@dist) unless @smbit.check([@dist]).empty?

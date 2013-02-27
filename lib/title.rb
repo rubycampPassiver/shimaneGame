@@ -37,7 +37,7 @@ class Title
     if Input.mouseDown?(M_LBUTTON) then
       puts "hit"
       #ƒV[ƒ“‘JˆÚ‚ÌğŒ
-      Scene.set_scene(:game_tottori) unless @pt.check(@img_start).empty?
+      Scene.set_scene(:tottori) unless @pt.check(@img_start).empty?
       Scene.set_scene(:level) unless @pt.check(@img_level).empty?
       Scene.finish unless @pt.check(@img_end).empty?
 		end

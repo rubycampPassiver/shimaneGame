@@ -4,7 +4,7 @@ class Game_miyagi
   def initialize
     @bg_img = Image.load("image/game_bg.png")
 	@img_shimane = Image.load("image/shimane.png")
-	@img_tottori = Image.load("image/miyagi.png")
+	@img_miyagi = Image.load("image/miyagi.png")
     @tiji   = Image.load("image/tiji.png")
 
   end

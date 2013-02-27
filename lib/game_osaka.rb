@@ -2,9 +2,10 @@
 
 class Game_osaka
   def initialize
+
     @bg_img = Image.load("image/game_bg.png")
 	@img_shimane = Image.load("image/shimane.png")
-	@img_tottori = Image.load("image/osaka.png")
+	@img_osaka = Image.load("image/osaka.png")
     @tiji   = Image.load("image/tiji.png")
 
   end
