@@ -15,7 +15,7 @@ class Bullet < Sprite
   attr_accessor :bd_right
   
   #デフォルトコンストラクタ
-  def initialize(x = 0.0, y = 0.0, up = 0.0, down = 100.0, left =  0.0, right = 100.0)
+  def initialize(x = 0.0, y = 0.0, up = 0.0, down = 100.0, left =  0.0, right = 100.0, ai = false)
     
     #表示開始地点
     @img_base_x, @img_base_y= x, y
@@ -25,11 +25,13 @@ class Bullet < Sprite
     @base_x, @base_y, @base_r = size/2, size/2, size/2
     super(@img_base_x,@img_base_y, Image.new(@img_base_x,@img_base_y).circleFill(@base_x, @base_y, @base_r, [0,0,0]))
     
-    #マウス座標の保存
-    @mouse_x, @mouse_y = Input.mousePosX, Input.mousePosY
-    
     #玉の有効範囲の境界線を保存
     @bd_up, @bd_down, @bd_left,@bd_right = up, down, left, right
+    
+    #マウス座標の保存
+    @mouse_x, @mouse_y = Input.mousePosX, Input.mousePosY if not ai
+    @mouse_x, @mouse_y = Rand(right - left) + left, Rand(down - up) + up  if ai
+        
   end
   
   #アップデート

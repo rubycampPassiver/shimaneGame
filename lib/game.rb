@@ -168,8 +168,8 @@ class Game
     end
 
     #‹Ê‚ğ”ò‚Î‚·ˆ—
-    @bullets = [Bullet.new(@mayor.x, @mayor.y, 0.0, Window.height,0.0, Window.width/2)] if Input.mouseDown?(M_LBUTTON)
-    @bullets_agent = [Bullet.new(@agent.x, @agent.y, 0.0, Window.height,0.0, Window.width/2)] if Input.mouseDown?(M_LBUTTON)
+    @bullets = [Bullet.new(@mayor.x, @mayor.y, 0.0, Window.height,0.0, Window.width/2, false)] if Input.mouseDown?(M_LBUTTON)
+    @bullets_agent = [Bullet.new(@agent.x, @agent.y, 0.0, Window.height,0.0, Window.width/2, true)] if Input.mouseDown?(M_LBUTTON)
     
 
     #’†’fƒƒjƒ…[•\¦ˆ—
