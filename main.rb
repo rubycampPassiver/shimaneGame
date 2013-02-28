@@ -22,6 +22,7 @@ require_relative 'lib/shijimi'
 require_relative 'lib/money'
 require_relative 'lib/citizen'
 require_relative 'mayor'
+require_relative 'enemy'
 
 #シーンのインスタンス化と命名
 Scene.add_scene(:title, Title.new)

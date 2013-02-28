@@ -22,7 +22,9 @@ class Game
     @start = Image.load("image/kaishi.png")
     @img_shimane = Image.load("image/shimane.png")
     @img_enemy = Image.load("image/"+imgname)
-    @mayor = Mayor.new #市長
+    @mayor = Mayor.new(135,392) #市長
+    @agent = Enemy.new(550,392)
+
     @citizens = []#市民たち
     
     #    @item_img = Image.load("./image/fall_item/kani.png").setColorKey([0, 255, 0])
@@ -60,7 +62,7 @@ class Game
     @img_end = Sprite.new(275,450, Image.load(File.expand_path("../../image/end.png", __FILE__)))
     @img_title = Sprite.new(275,350, Image.load(File.expand_path("../../image/img_title.png", __FILE__)))
     @pt = Sprite.new(x,y, Image.load(File.expand_path("../../image/pt_1.png", __FILE__)))
-    @count_timer = 5
+    @count_timer = 180
     @click = 0
   end
 
@@ -167,7 +169,9 @@ class Game
 
     #玉を飛ばす処理
     @bullets = [Bullet.new(@mayor.x, @mayor.y, 0.0, Window.height,0.0, Window.width/2)] if Input.mouseDown?(M_LBUTTON)
+    @bullets_agent = [Bullet.new(@agent.x, @agent.y, 0.0, Window.height,0.0, Window.width/2)] if Input.mouseDown?(M_LBUTTON)
     
+
     #中断メニュー表示処理
     @a = 1 if Input.keyDown?(K_Y) 
     self.update(@a)
@@ -186,6 +190,7 @@ class Game
         
       # 通常のマウスクリックイベント(玉生成)
       @bullets = [Bullet.new(@mayor.x, @mayor.y, 0.0, Window.height,0.0, Window.width/2)] if Input.mouseDown?(M_LBUTTON) 
+      @bullets_agent = [Bullet.new(@agent.x, @agent.y, 0.0, Window.height,0.0, Window.width/2)] if Input.mouseDown?(M_LBUTTON) 
     end
     
     #玉とアイテムの衝突判定
@@ -200,8 +205,8 @@ class Game
     Window.drawFont(50,50, Item.get_friendpoint.to_s + "万人", Font.new(24))
     
     #アップデート、ドロー、クリア
-    Sprite.update([@items1, @item2, @mayor, @bullets, @citizens])
-    Sprite.draw([@items1, @item2, @mayor, @bullets])
+    Sprite.update([@items1, @item2, @mayor, @bullets, @citizens, @agent, @bullets_agent])
+    Sprite.draw([@items1, @item2, @mayor, @bullets, @agent, @bullets_agent])
     Sprite.clean([@items1,@items2,@bullets])
     
   end
