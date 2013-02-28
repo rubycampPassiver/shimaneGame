@@ -5,7 +5,7 @@ require 'dxruby'
 Window.width  = 800
 Window.height = 600
 
-image = Image.load("images/game.png")
+image = Image.load("image/game.png")
 font  = Font.new(40)
 
 count_timer = 180
@@ -25,12 +25,12 @@ i += 1
 		i = 0
 		count_timer -= 1
 		if count_timer < 0 then
-			break #ここはbreakでなく０秒になったときの処理を書く
+			break
 		end
 	end
-	if sec <= 9 then　　#秒数が1～9秒のときの表記が 2:9といったようになるので2:09となるようにした
+	if sec <= 9 then
 		Window.drawFont(365, 220, "#{min}:0#{sec}", font, :color => [0, 0, 0])
-	else　　　　　      #それ以外の時は普通に表示
+	else
 		Window.drawFont(365, 220, "#{min}:#{sec}", font, :color => [0, 0, 0])
 	end
 end
