@@ -12,11 +12,11 @@ class Level
       
     @bg_img=Image.load(File.expand_path("../../image/title.png", __FILE__))#背景画像
     @level_title = "対戦レベル"#タイトル文
-    prefimg = Image.load(File.expand_path("../../image/pref_tottori.png", __FILE__))
+    prefimg = Image.load(File.expand_path("../../image/btn_chugoku.png", __FILE__))
     @chugoku=Sprite.new((Window.width-prefimg.width)/2-200,Window.height/2+downpx,prefimg)#県のイメージ
-    distimg = Image.load(File.expand_path("../../image/dist_chugoku.png", __FILE__))
+    distimg = Image.load(File.expand_path("../../image/btn_westjp.png", __FILE__))
     @westjp=Sprite.new((Window.width-distimg.width)/2,Window.height/2+downpx,distimg)#地方のイメージ
-    jpimg = Image.load(File.expand_path("../../image/all_japan.png", __FILE__))
+    jpimg = Image.load(File.expand_path("../../image/btn_alljp .png", __FILE__))
     @alljp=Sprite.new((Window.width-jpimg.width)/2+200,Window.height/2+downpx,jpimg)#全国のイメージ
     back = Image.load(File.expand_path("../../image/back.png", __FILE__))
     @back=Sprite.new(Window.width-back.width,Window.height-back.height,back)#戻るボタン

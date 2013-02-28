@@ -11,13 +11,13 @@ Window.height = 600
 require_relative 'lib/scene'
 require_relative 'lib/title'
 require_relative 'lib/level'
-require_relative 'lib/item'
 require_relative 'lib/game'
-#require_relative 'lib/game_miyagi'
-#require_relative 'lib/game_osaka'
-#require_relative 'lib/game_tokyo'
-#require_relative 'lib/game_tottori'
 require_relative 'lib/bullet'
+require_relative 'lib/item'
+require_relative 'lib/crab'
+require_relative 'lib/camel'
+require_relative 'lib/orochi'
+require_relative 'lib/pear'
 
 #シーンのインスタンス化と命名
 Scene.add_scene(:title,  Title.new)
@@ -25,10 +25,6 @@ Scene.add_scene(:level, Level.new)
 Scene.add_scene(:chugoku, Game.new(Game::CHUGOKU))
 Scene.add_scene(:westjp, Game.new(Game::WESTJP))
 Scene.add_scene(:alljp, Game.new(Game::ALLJP))
-#Scene.add_scene(:miyagi, Game_miyagi.new)
-#Scene.add_scene(:osaka, Game_osaka.new)
-#Scene.add_scene(:tokyo,  Game_tokyo.new)
-#Scene.add_scene(:tottori, Game_tottori.new)
 
 #最初のシーンをどれにするか
 Scene.set_scene(:title)

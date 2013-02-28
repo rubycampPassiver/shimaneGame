@@ -1,5 +1,3 @@
-#<<<<<<< HEAD
-#coding: SJIS
 class Game
 
   CHUGOKU = 1
@@ -9,57 +7,44 @@ class Game
   def initialize(modeint)
     imgname = ''
     case modeint
-	when CHUGOKU
-	imgname = 'bg_chugoku.png'
-	when WESTJP
-	imgname = 'bg_westjp.png'
-	when ALLJP
-	imgname = 'bg_alljp.png'
-   end
-#=======
-#?class Game_tottori
-#   def initialize
-#>>>>>>> 5f7a8ede8fed0f25689eed409cb31394fabbfab6
+    when CHUGOKU
+      imgname = 'bg_chugoku.png'
+    when WESTJP
+      imgname = 'bg_westjp.png'
+    when ALLJP
+      imgname = 'bg_alljp.png'
+    end
     @bg_img = Image.load("image/game_bg.png")
     @img_shimane = Image.load("image/shimane.png")
     @img_enemy = Image.load("image/"+imgname)
     @tiji   = Image.load("image/tiji.png")
-    @item_img = Image.load("./image/tiji.png")
-		@item_img2 = Image.load("./image/win.png")
-		@item_img3 = Image.load("./image/lose.png")
-		@items1 = []
-		@items2 = []
+		@items1 = []#左上に出てくるアイテム群
+		@items2 = []#右上に出てくるアイテム群
 
   end
 
   def add_item
-	if @items1.size <= 12
-	    if rand(150) == 2
-		ransuu = rand(4)
-		case ransuu
-			when 3
-				@items1 << Item.new(rand(200)+30,15,@item_img3)
-			when 2
-				@items1 << Item.new(rand(200)+30,15,@item_img2)
-			else
-				@items1 << Item.new(rand(200)+30,15,@item_img)
-		end
-	     end
-	 end	
-	 if @items2.size <= 12
-             if rand(150) == 2
-		ransuu = rand(4)
-	        case ransuu
-			when 3
-				@items2 << Item.new(Window.width-rand(200)-150,25,@item_img3)
-			when 2
-				@items2 << Item.new(Window.width-rand(200)-150,25,@item_img2)
-			else
-				@items2 << Item.new(Window.width-rand(200)-150,25,@item_img)
-		end	
-	     end
-	 end	
-  end
+    item_array_size = 12
+    
+    if (@items1.size <= item_array_size) and (0 < (rand(100.0)+1.0).abs and (rand(100.0)+1.0).abs < 1.5)
+      x_origin, y_origin = 0+30+ rand(200),15
+      case rand(4)
+      when 3 then tmp = Crab.new(x_origin,y_origin)
+      when 2 then tmp = Camel.new(x_origin,y_origin)
+      else tmp = Orochi.new(x_origin,y_origin)
+      end
+      @items1 << tmp
+    end	
+    
+    if (@items2.size <= item_array_size) and (0 < (rand(100.0)+1.0).abs and (rand(100.0)+1.0).abs < 1.5)
+      x_origin, y_origin = Window.width/2+30+rand(200)-150,15
+      case rand(4)
+      when 3 then @items2 << Crab.new(x_origin, y_origin)
+      when 2 then @items2 << Camel.new(x_origin, y_origin)
+      else @items2 << Orochi.new(x_origin, y_origin)
+      end	
+    end	
+  end	
   
   def play
     Scene.set_scene(:game) if Input.keyPush?(K_SPACE)
@@ -76,7 +61,7 @@ class Game
     
     Sprite.draw(@items1)	
     Sprite.draw(@items2)
-    add_item
+    self.add_item
     Sprite.clean(@items1)
     Sprite.clean(@items2)
   end
