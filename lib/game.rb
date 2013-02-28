@@ -18,8 +18,16 @@ class Game
     @img_shimane = Image.load("image/shimane.png")
     @img_enemy = Image.load("image/"+imgname)
     @tiji   = Image.load("image/tiji.png")
+#<<<<<<< HEAD
 		@items1 = []#左上に出てくるアイテム群
 		@items2 = []#右上に出てくるアイテム群
+#=======
+   @item_img = Image.load("./image/fall_item/kani.png").setColorKey([0, 255, 0])
+		@item_img2 = Image.load("./image/fall_item/yamata.png").setColorKey([0, 255, 0]) # i_okane.png, i_shijimi.pngを追加したい.
+		@item_img3 = Image.load("./image/fall_item/rakuda.png").setColorKey([0, 255, 0])
+#		@items1 = []
+#		@items2 = []
+#>>>>>>> 75a63dbb5f4bb2503452715a39208954e3c9eb12
 
   end
 
