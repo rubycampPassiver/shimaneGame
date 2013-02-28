@@ -9,8 +9,8 @@ class Pear < Item
     img.setColorKey([255,255,255])
     super(x,y,img)
     @point = 10
-		@x_speed = 1.0
-		@x_direction = 1.0
+#		@x_speed = 1.0
+#		@x_direction = 1.0
   end
   
   #バニッシュ

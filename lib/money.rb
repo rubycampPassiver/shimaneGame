@@ -1,10 +1,10 @@
 # coding: SJIS
 
-class Camel < Item
+class Money < Item
   #デフォルトコンストラクタ
   def initialize(x,y)
-    super(x,y,Image.load(File.expand_path("../../image/fall_item/nashi.png", __FILE__)))
-    @point = 100
+    super(x,y,Image.load(File.expand_path("../../image/fall_item/i_okane.png", __FILE__)))
+    @point = 10
     #		@x_speed = 1.0
     #		@x_direction = 1.0
   end
