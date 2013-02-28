@@ -163,14 +163,12 @@ class Game
     
     #アイテム追加
     self.add_itemruby main.r
-      @citizens.delete(item) if item.isItemTrue and (item.x < 0 or Window.width < item.x)
-    end
-
+    @citizens.delete(item) if item.isItemTrue and (item.x < 0 or Window.width < item.x)
+    
     #玉を飛ばす処理
     @bullets = [Bullet.new(@mayor.x, @mayor.y, 0.0, Window.height,0.0, Window.width/2, false)] if Input.mouseDown?(M_LBUTTON)
     @bullets_agent = [Bullet.new(@agent.x, @agent.y, 0.0, Window.height,0.0, Window.width/2, true)] if Input.mouseDown?(M_LBUTTON)
     
-
     #中断メニュー表示処理
     @a = 1 if Input.keyDown?(K_Y) 
     self.update(@a)
@@ -207,5 +205,5 @@ class Game
     Sprite.update([@items1, @item2, @mayor, @bullets, @citizens, @agent, @bullets_agent])
     Sprite.draw([@items1, @item2, @mayor, @bullets, @agent, @bullets_agent])
     Sprite.clean([@items1,@items2,@bullets])
-    
+  end
 end
