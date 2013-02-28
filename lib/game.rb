@@ -9,12 +9,9 @@ class Game
   def initialize(modeint)
     imgname = ''
     case modeint
-    when CHUGOKU
-      imgname = 'bg_chugoku.png'
-    when WESTJP
-      imgname = 'bg_westjp.png'
-    when ALLJP
-      imgname = 'bg_alljp.png'
+      when CHUGOKU then imgname = 'bg_chugoku.png'
+      when WESTJP then imgname = 'bg_westjp.png'
+      when ALLJP then imgname = 'bg_alljp.png'
     end
     @bg_img = Image.load("image/game_bg.png")
     @start = Image.load("image/kaishi.png")
@@ -29,11 +26,7 @@ class Game
     @items2 = []
     @mayor = Mayor.new
     @bullet = nil
-
-    if Input.mouseDown?(M_LBUTTON) then
-      x = Input.mousePosX
-      y = Input.mousePosY
-    end
+    
     @a = 0
     @start_x = 800
     @start_y = 0
@@ -42,6 +35,7 @@ class Game
     @img_next = Sprite.new(275,250, Image.load(File.expand_path("../../image/next.png", __FILE__)))
     @img_end = Sprite.new(275,450, Image.load(File.expand_path("../../image/end.png", __FILE__)))
     @img_title = Sprite.new(275,350, Image.load(File.expand_path("../../image/img_title.png", __FILE__)))
+    x, y = Input.mousePosX, Input.mousePosY if Input.mouseDown?(M_LBUTTON) 
     @pt = Sprite.new(x,y, Image.load(File.expand_path("../../image/pt_1.png", __FILE__)))
   end
 
@@ -72,8 +66,7 @@ class Game
 
   #擬似ポインタをクリック先に移動
   def update(a)
-    @pt.x = Input.mousePosX
-    @pt.y = Input.mousePosY
+    @pt.x, @pt.y = Input.mousePosX, Input.mousePosY
 
     if a == 1
       @img_next.draw
@@ -81,33 +74,15 @@ class Game
       @img_title.draw
     end
 	
-    if @start_x > -800 then
-      @start_x = @start_x -20
-    end
+    @start_x = @start_x -20 if @start_x > -800
   end
 
   
   def play
     Scene.set_scene(:game) if Input.keyPush?(K_SPACE)
-    #<<<<<<< HEAD
-   
-    #    Window.draw(  0,  0, @bg_img)
-    #    Window.draw( 25, 25, @img_shimane)
-    #    Window.draw(450, 25, @img_enemy)
-    #    Window.draw( 31,392, @tiji)
-    #    Window.draw(255,392, @tiji)
-    #    Window.draw(456,392, @tiji)
-    #    Window.draw(680,392, @tiji)
-    
-    #    self.add_item
-    
-    
-    #=======
     Sprite.update([@items1, @item2, @mayor, @bullet])
     Sprite.draw([@items1, @item2, @mayor, @bullet])
     Sprite.clean([@items1,@items2,@bullets])
-    #    Sprite.update(@items1)
-    #    Sprite.update(@items2)
     Window.draw(0, 0, @bg_img)
     Window.draw(25,25, @img_shimane)
     Window.draw(450, 25, @img_enemy)
@@ -115,19 +90,11 @@ class Game
     Window.draw(255,456,@citizen)
     Window.draw(456,456,@citizen)
     Window.draw(680,456,@citizen)
-    
 
-    Sprite.draw(@items1)
-
-    Sprite.draw(@items2)
     self.add_item
-    Sprite.clean(@items1)
-    Sprite.clean(@items2)
 
     #中段メニュー表示処理
-    if Input.keyDown?(K_Y)
-  	  @a = 1
-    end
+    @a = 1 if Input.keyDown?(K_Y)
 
     #玉を飛ばす処理
     if Input.mouseDown?(M_LBUTTON) then
@@ -146,7 +113,6 @@ class Game
       Scene.finish unless @pt.check(@img_end).empty?
       Scene.set_scene(:title) unless @pt.check([@img_title]).empty?
     end
-
-    #>>>>>>> 1d0b6db552661d523494d24f5d65c0883323c84e
+    
   end
 end
