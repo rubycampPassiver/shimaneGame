@@ -7,8 +7,10 @@ def initialize
 		x = Input.mousePosX
 		y = Input.mousePosY
 		end
+
 	@a = 0
     @bg_img = Image.load("image/game.png")
+	@start = Image.load("image/kaishi.png")
     @citizen   = Image.load("image/citizen.png")
 		@item_img = Image.load("./image/tiji.png")
 		@item_img2 = Image.load("./image/win.png")
@@ -69,6 +71,10 @@ def initialize
   def play
 
       Scene.set_scene(:title) if Input.keyPush?(K_SPACE)
+
+
+#START画像の表示
+Window.draw(0,0,@start)
 		Sprite.update(@items1)
 		Sprite.update(@items2)
       Window.draw(0, 0, @bg_img)
