@@ -162,8 +162,7 @@ class Game
     Window.draw(450, 25, @img_enemy)
     
     #ƒAƒCƒeƒ€’Ç‰Á
-    self.add_item
-    @citizens.each do |item| 
+    self.add_itemruby main.r
       @citizens.delete(item) if item.isItemTrue and (item.x < 0 or Window.width < item.x)
     end
 
@@ -209,5 +208,4 @@ class Game
     Sprite.draw([@items1, @item2, @mayor, @bullets, @agent, @bullets_agent])
     Sprite.clean([@items1,@items2,@bullets])
     
-  end
 end
