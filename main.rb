@@ -11,6 +11,7 @@ Window.height = 600
 require_relative 'lib/scene'
 require_relative 'lib/title'
 require_relative 'lib/level'
+require_relative 'lib/item'
 require_relative 'lib/game'
 #require_relative 'lib/game_miyagi'
 #require_relative 'lib/game_osaka'

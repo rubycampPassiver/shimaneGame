@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿#coding: SJIS
 class Game
 
@@ -15,6 +16,10 @@ class Game
 	when ALLJP
 	imgname = 'bg_alljp.png'
    end
+=======
+﻿class Game_tottori
+   def initialize
+>>>>>>> 5f7a8ede8fed0f25689eed409cb31394fabbfab6
     @bg_img = Image.load("image/game_bg.png")
     @img_shimane = Image.load("image/shimane.png")
     @img_enemy = Image.load("image/"+imgname)
