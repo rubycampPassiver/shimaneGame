@@ -10,6 +10,7 @@ class Citizen < Sprite
   @witch = false # false => leftWindow : true = > RightWindow
   
   attr_accessor :requirement
+  attr_accessor :isItemTrue
   
   #デフォルトコンストラクタ
 	def initialize(x, witch) 
@@ -36,7 +37,7 @@ class Citizen < Sprite
 
 	def move
 		if @witch # trueなら、現在位置が左のウィンドウ
-			self.x -= 5 # 左のウィンドウへ移動する.-----------------------5はスピードのこと。
+			self.x += -5 # 左のウィンドウへ移動する.-----------------------5はスピードのこと。
 		else self.x += 5 # 右のウィンドウに移動する.
 		end
 	end

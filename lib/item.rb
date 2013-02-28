@@ -60,6 +60,8 @@ class Item < Sprite
     
     @falling = false
     @ay =0
+    self.scale_x = 0.5
+    self.scale_y = 0.5
     
 #    Item.resetpoint
 	end
@@ -76,14 +78,10 @@ class Item < Sprite
             @x_direction *= -1
           end
 
-          if self.x >= 380-self.image.width
-            self.x -= 1
-          end
+          self.x -= 1 if self.x >= 380-self.image.width
 
           if self.y <= Window.height - 400
-            if self.x <= 15
-              self.x += 1
-            end
+            self.x += 1 if self.x <= 15
           end
         end
       else
@@ -92,14 +90,8 @@ class Item < Sprite
             @x_speed = 0
             @x_direction *= -1
           end
-
-          if self.x >= Window.width - self.image.width
-            self.x -= 1
-          end
-
-          if self.x <= Window.width - 360
-            self.x += 1
-          end
+          self.x -= 1 if self.x >= Window.width - self.image.width
+          self.x += 1 if self.x <= Window.width - 360
         end
       end
 
