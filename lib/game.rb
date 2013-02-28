@@ -1,3 +1,5 @@
+#coding: SJIS
+
 class Game
 
   CHUGOKU = 1
@@ -18,17 +20,19 @@ class Game
     @img_shimane = Image.load("image/shimane.png")
     @img_enemy = Image.load("image/"+imgname)
     @tiji   = Image.load("image/tiji.png")
-#<<<<<<< HEAD
+    #<<<<<<< HEAD
 		@items1 = []#左上に出てくるアイテム群
 		@items2 = []#右上に出てくるアイテム群
-#=======
-   @item_img = Image.load("./image/fall_item/kani.png").setColorKey([0, 255, 0])
+    #=======
+    @item_img = Image.load("./image/fall_item/kani.png").setColorKey([0, 255, 0])
 		@item_img2 = Image.load("./image/fall_item/yamata.png").setColorKey([0, 255, 0]) # i_okane.png, i_shijimi.pngを追加したい.
 		@item_img3 = Image.load("./image/fall_item/rakuda.png").setColorKey([0, 255, 0])
-#		@items1 = []
-#		@items2 = []
-#>>>>>>> 75a63dbb5f4bb2503452715a39208954e3c9eb12
-
+    #		@items1 = []
+    #		@items2 = []
+    #>>>>>>> 75a63dbb5f4bb2503452715a39208954e3c9eb12
+    
+    @mayor = Mayor.new
+    @bullet = nil
   end
 
   def add_item
@@ -56,26 +60,25 @@ class Game
   
   def play
     Scene.set_scene(:game) if Input.keyPush?(K_SPACE)
-    Sprite.update(@items1)
-    Sprite.update(@items2)
    
-    Window.draw(0, 0, @bg_img)
-    Window.draw(25,25, @img_shimane)
+    Window.draw(  0,  0, @bg_img)
+    Window.draw( 25, 25, @img_shimane)
     Window.draw(450, 25, @img_enemy)
-    Window.draw( 31,392,@tiji)
-    Window.draw(255,392,@tiji)
-    Window.draw(456,392,@tiji)
-    Window.draw(680,392,@tiji)
+    Window.draw( 31,392, @tiji)
+    Window.draw(255,392, @tiji)
+    Window.draw(456,392, @tiji)
+    Window.draw(680,392, @tiji)
     
-    Sprite.draw(@items1)	
-    Sprite.draw(@items2)
     self.add_item
-    
+      
     if Input.mouseDown?(M_LBUTTON) then
+      puts "マウスクリック"
+      @bullets = [Bullet.new(@mayor.x, @mayor.y, 0.0, Window.height,0.0, Window.width/2)]
       
     end
     
-    Sprite.clean(@items1)
-    Sprite.clean(@items2)
+    Sprite.update([@items1, @item2, @mayor, @bullet])
+    Sprite.draw([@items1, @item2, @mayor, @bullet])
+    Sprite.clean([@items1,@items2,@bullets])
   end
 end

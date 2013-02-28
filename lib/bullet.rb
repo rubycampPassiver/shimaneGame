@@ -8,10 +8,14 @@ class Bullet < Sprite
   attr_accessor :base_x
   attr_accessor :base_y
   attr_accessor :base_r
-  attr_accessor :bt
+  
+  attr_accessor :bd_up
+  attr_accessor :bd_down
+  attr_accessor :bd_left
+  attr_accessor :bd_right
   
   #デフォルトコンストラクタ
-  def initialize(x, y)
+  def initialize(x = 0.0, y = 0.0, up = 0.0, down = 100.0, left =  0.0, right = 100.0)
     
     #表示開始地点
     @img_base_x = x
@@ -28,6 +32,10 @@ class Bullet < Sprite
     @mouse_x = Input.mousePosX
     @mouse_y = Input.mousePosY
     
+    @bd_up = up
+    @bd_down = down
+    @bd_left = left
+    @bd_right = right
   end
   
   #アップデート
@@ -42,15 +50,17 @@ class Bullet < Sprite
     self.x +=speed_x*((@mouse_x-@img_base_x)/hyp)
     self.y +=speed_y*((@mouse_y-@img_base_y)/hyp)
     #本当は画面外に出たら消したいが、これをやると初めから消えてしまう
-    #    self.vanish if has_out?
-    
+#    @vanished = true if has_out
+    p @vanished
   end
   
   #玉が画面外（+-100px）に出たかどうかの判定
-  def has_out?
+  def has_out
+    
     flag = false
-    flag = true if self.x < 0 -100 || Window.width < self.x+100
-    flag = true if self.y < 0-100 || Window.height < self.y+100
+#    flag = true if ((self.x<@bd_left) || (@bd_right<self.x+self.image.width))
+#    flag = true if ((self.y<@bd_up)||(@bd_down<self.y+self.image.height))
+    
     return flag
   end
   
