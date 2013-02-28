@@ -18,6 +18,8 @@ require_relative 'lib/crab'
 require_relative 'lib/camel'
 require_relative 'lib/orochi'
 require_relative 'lib/pear'
+require_relative 'lib/shijimi'
+require_relative 'lib/money'
 require_relative 'lib/citizen'
 require_relative 'mayor'
 

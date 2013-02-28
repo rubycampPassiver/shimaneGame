@@ -1,35 +1,19 @@
 # coding: Shift_JIS
 
-#å¸‚æ°‘ã‚’è¡¨ã™ã‚¯ãƒ©ã‚¹
+#s–¯‚ğ•\‚·ƒNƒ‰ƒX
 class Citizen < Sprite
   
-  #ã‚¯ãƒ©ã‚¹å¤‰æ•°ç¾¤
-#  @@img = Image.load(File.expand_path("../../image/citizen.png", __FILE__))#ãƒãƒƒã‚¯ã‚°ãƒ©ã‚¦ãƒ³ãƒ‰ç”»åƒ
-#  @@py = 456#å›ºå®š
-
-#  @@pos[0, 0, 0, 0]
-
-  #######  Window.draw( 31,456,@citizen)
-  #######  Window.draw(255,456,@citizen)
-  #######  Window.draw(456,456,@citizen)
-  #######  Window.draw(680,456,@citizen)
-
-  #ã“ã“ã§ã®ç‰¹æ€§ã¯åŸºæœ¬å…¨ã¦èª­ã¿å–ã‚Šå°‚ç”¨
-  #ç¶™æ‰¿å…ˆã§å¯å¤‰ã—ã¦å‡ºåŠ›ã™ã‚‹
-  # attr_reader :travering
+  #ƒCƒ“ƒXƒ^ƒ“ƒX•Ï”ŒQ
+  @travering = false
+  @isItemTrue = false # —v‹‚µ‚½ƒAƒCƒeƒ€‚ª³‚µ‚¢‚©B@i³‚µ‚­‚È‚©‚Á‚½‚ç—×‚ÌŒ§‚É‚¢‚Á‚Ä‚µ‚Ü‚¤HH
+  @px = 100
+  @witch = false # false => leftWindow : true = > RightWindow
   
+  attr_accessor :requirement
   
-  
-  #ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å¤‰æ•°ç¾¤
-    @travering = false
-    @isItemTrue = false # è¦æ±‚ã—ãŸã‚¢ã‚¤ãƒ†ãƒ ãŒæ­£ã—ã„ã‹ã€‚ã€€ï¼ˆæ­£ã—ããªã‹ã£ãŸã‚‰éš£ã®çœŒã«ã„ã£ã¦ã—ã¾ã†ï¼Ÿï¼Ÿ
-    @px = 100
-    @witch = false # false => leftWindow : true = > RightWindow
-
-  #ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
-	def initialize(x, witch) #
-		self.image = Image.load(File.expand_path("../../image/citizen.png", __FILE__))#ãƒãƒƒã‚¯ã‚°ãƒ©ã‚¦ãƒ³ãƒ‰ç”»åƒ
-
+  #ƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	def initialize(x, witch) 
+		self.image = Image.load(File.expand_path("../../image/citizen.png", __FILE__))#–{‘Ì‚Ì‰æ‘œ
 		@travering = false
 		@isItemTrue = false
 		@px = x
@@ -37,35 +21,59 @@ class Citizen < Sprite
 		@witch = witch # left
 		self.x = @px
 		self.y = @py
-
-        #self.draw(@px,@@py,@@img.setColorKey([255,255,255]))#citizenã®ç”»åƒã‚’èª­ã‚“ã§é€éå‡¦ç†ï¼‹èƒŒå¾Œã¨åˆæˆ
-    # @x_speed = 1#@@default_y_speed 
-    # @x_direction = 1#@@default_x_speed
+    
+    @requirement = getitemrandom #—v‹ƒAƒCƒeƒ€‚Ìİ’è
+    
 	end
-
+  
 	def update
-		self.draw
-		if @isItemTrue
-#        if true
-			move
-		end
+    self.draw
+    @requirement.update
+		@requirement.draw
+		move if @isItemTrue
 		@vanished = true if self.y >= Window.height - 325
 	end
 
 	def move
-		if @witch == true # trueãªã‚‰ã€ç¾åœ¨ä½ç½®ãŒå·¦ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦
-			self.x += 5 # å³ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã¸ç§»å‹•ã™ã‚‹.-----------------------5ã¯ã‚¹ãƒ”ãƒ¼ãƒ‰ã®ã“ã¨ã€‚
-		else self.x -= 5 # å·¦ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã«ç§»å‹•ã™ã‚‹.
+		if @witch # true‚È‚çAŒ»İˆÊ’u‚ª¶‚ÌƒEƒBƒ“ƒhƒE
+			self.x -= 5 # ¶‚ÌƒEƒBƒ“ƒhƒE‚ÖˆÚ“®‚·‚é.-----------------------5‚ÍƒXƒs[ƒh‚Ì‚±‚ÆB
+		else self.x += 5 # ‰E‚ÌƒEƒBƒ“ƒhƒE‚ÉˆÚ“®‚·‚é.
 		end
 	end
 
-	def getItem
-
-
+  #Õ“Ë”»’è
+	def hit(obj)
+    if obj.is_a?(Item) then #ƒAƒCƒeƒ€‚Æ‚ÌÕ“Ë‚Ìê‡
+      if requirement.is_a?(obj.class) then #—v‹‚Æ“¯‚¶ƒAƒCƒeƒ€‚Ìê‡
+        @isItemTrue = true
+        Item.add_friendpoint(obj.point)
+      end
+    end
 	end
 
 	def vanished?
 		return @vanished
 	end
-
+  
+  #—v‹ƒAƒCƒeƒ€‚ğƒ‰ƒ“ƒ_ƒ€‚É”­¶‚³‚¹‚é
+  def getitemrandom
+    #Šm—¦‚É‰‚¶‚½ƒAƒCƒeƒ€¶¬
+    posarr = [40,40,20]
+    flag = rand(posarr.inject{|sum, n| sum + n })
+    sum = 0.0
+    count = 1
+    
+    posarr.each do |item|
+      sum += item
+      break if flag < sum
+      count += 1
+    end
+    tmp = nil
+    case count
+    when 1 then tmp = Shijimi.new(self.x,self.y+100)
+    when 2 then tmp = Money.new(self.x,self.y+100)
+    else tmp = Orochi.new(self.x,self.y+100)
+    end
+    return tmp
+  end
 end
