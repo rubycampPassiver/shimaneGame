@@ -19,9 +19,10 @@ require_relative 'lib/camel'
 require_relative 'lib/orochi'
 require_relative 'lib/pear'
 require_relative 'lib/citizen'
+require_relative 'mayor'
 
 #シーンのインスタンス化と命名
-Scene.add_scene(:title,  Title.new)
+Scene.add_scene(:title, Title.new)
 Scene.add_scene(:level, Level.new)
 Scene.add_scene(:chugoku, Game.new(Game::CHUGOKU))
 Scene.add_scene(:westjp, Game.new(Game::WESTJP))

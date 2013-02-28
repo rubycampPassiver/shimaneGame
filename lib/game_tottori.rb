@@ -1,4 +1,4 @@
-﻿#coding: SJIS
+?�#coding: SJIS
 
 class Game_tottori
 def initialize
@@ -18,15 +18,13 @@ def initialize
 		@items1 = []
 		@items2 = []
 
-		#スプライトクラスのオブジェクトを設定（ボタン、擬似クリック用ポインタ）
-    @img_next = Sprite.new(275,250, Image.load(File.expand_path("../../image/next.png", __FILE__)))
+		#スプライトクラスのオブジェクトを設定（�?タン、擬似クリ�?��用ポインタ??    @img_next = Sprite.new(275,250, Image.load(File.expand_path("../../image/next.png", __FILE__)))
 	@img_end = Sprite.new(275,450, Image.load(File.expand_path("../../image/end.png", __FILE__)))
 	@img_title = Sprite.new(275,350, Image.load(File.expand_path("../../image/img_title.png", __FILE__)))
     @pt = Sprite.new(x,y, Image.load(File.expand_path("../../image/pt_1.png", __FILE__)))
   end
 
-  #擬似ポインタをクリック先に移動
-    def update(a)
+  #擬似ポインタをクリ�?��先に移�?    def update(a)
 		@pt.x = Input.mousePosX
 		@pt.y = Input.mousePosY
 
@@ -87,20 +85,19 @@ Window.draw(0,0,@start)
 		add_item
 		Sprite.clean(@items1)
 		Sprite.clean(@items2)
-#Yが押されたとき@a＝１とする
+#Yが押されたとき@a?�１とする
 if Input.keyDown?(K_Y)
 	@a = 1
 end
 
 
-#コンティニューとENDボタン、擬似ポインタの表示
+#コン�?��ニューとENDボタン、擬似ポインタの表示
 	self.update(@a)
     @pt.draw
 	
 
 
-    #ボタン処理（次の画面への遷移）
- 	if Input.mouseDown?(M_LBUTTON) then
+    #ボタン処�?��次の画面への遷移?? 	if Input.mouseDown?(M_LBUTTON) then
       Scene.set_scene(:osaka) unless @pt.check([@img_next]).empty?
 	  Scene.finish unless @pt.check(@img_end).empty?
 	  Scene.set_scene(:title) unless @pt.check([@img_title]).empty?

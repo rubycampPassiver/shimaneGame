@@ -1,4 +1,4 @@
-ï»¿#coding: SJIS
+?¿#coding: SJIS
 
 class Game_osaka
   def initialize

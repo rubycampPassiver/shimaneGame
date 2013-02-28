@@ -1,24 +1,30 @@
+#coding: SJIS
+
 class Game
 
   CHUGOKU = 1
   WESTJP = 2
   ALLJP = 3
-
+  
+  #デフォルトコンストラクタ
   def initialize(modeint)
+    
+    #書くモードに合わせて背景を変更
     imgname = ''
     case modeint
-    when CHUGOKU
-      imgname = 'bg_chugoku.png'
-    when WESTJP
-      imgname = 'bg_westjp.png'
-    when ALLJP
-      imgname = 'bg_alljp.png'
+      when CHUGOKU then imgname = 'bg_chugoku.png'
+      when WESTJP then imgname = 'bg_westjp.png'
+      when ALLJP then imgname = 'bg_alljp.png'
     end
     @bg_img = Image.load("image/game_bg.png")
 	@start = Image.load("image/kaishi.png")
     @img_shimane = Image.load("image/shimane.png")
     @img_enemy = Image.load("image/"+imgname)
     @tiji   = Image.load("image/tiji.png")
+    @mayor = Mayor.new #視聴
+    @bullet = nil #
+    @citizen   = Image.load("image/citizen.png") #市民
+    
 	@item_img = Image.load("./image/fall_item/kani.png").setColorKey([0, 255, 0])
 	@item_img2 = Image.load("./image/fall_item/yamata.png").setColorKey([0, 255, 0]) # i_okane.png, i_shijimi.pngを追加したい.
 	@item_img3 = Image.load("./image/fall_item/rakuda.png").setColorKey([0, 255, 0])
@@ -34,10 +40,11 @@ class Game
 	@start_x = 800
 	@start_y = 0
 
-	#スプライトクラスのオブジェクトを設定（ボタン、擬似クリック用ポインタ）
+    #スプライトクラスのオブジェクトを設定（ボタン、擬似クリック用ポインタ）
     @img_next = Sprite.new(275,250, Image.load(File.expand_path("../../image/next.png", __FILE__)))
-	@img_end = Sprite.new(275,450, Image.load(File.expand_path("../../image/end.png", __FILE__)))
-	@img_title = Sprite.new(275,350, Image.load(File.expand_path("../../image/img_title.png", __FILE__)))
+    @img_end = Sprite.new(275,450, Image.load(File.expand_path("../../image/end.png", __FILE__)))
+    @img_title = Sprite.new(275,350, Image.load(File.expand_path("../../image/img_title.png", __FILE__)))
+    x, y = Input.mousePosX, Input.mousePosY if Input.mouseDown?(M_LBUTTON) 
     @pt = Sprite.new(x,y, Image.load(File.expand_path("../../image/pt_1.png", __FILE__)))
 
     @citizen1 = Citizen.new(40, true)
@@ -50,7 +57,8 @@ class Game
     item_array_size = 12
     
     if (@items1.size <= item_array_size) and (0 < (rand(100.0)+1.0).abs and (rand(100.0)+1.0).abs < 1.5)
-      x_origin, y_origin = 0+30+ rand(200),15
+      x_origin = (25..375).to_a.shuffle.first
+      y_origin = 15
       case rand(4)
       when 3 then tmp = Crab.new(x_origin,y_origin)
       when 2 then tmp = Camel.new(x_origin,y_origin)
@@ -60,7 +68,8 @@ class Game
     end	
     
     if (@items2.size <= item_array_size) and (0 < (rand(100.0)+1.0).abs and (rand(100.0)+1.0).abs < 1.5)
-      x_origin, y_origin = Window.width/2+30+rand(200)-150,15
+      x_origin = (475..(Window.width - 25)).to_a.shuffle.first
+      y_origin = 15
       case rand(4)
       when 3 then @items2 << Crab.new(x_origin, y_origin)
       when 2 then @items2 << Camel.new(x_origin, y_origin)
@@ -71,36 +80,29 @@ class Game
 
   #擬似ポインタをクリック先に移動
   def update(a)
-    @pt.x = Input.mousePosX
-	@pt.y = Input.mousePosY
+    @pt.x, @pt.y = Input.mousePosX, Input.mousePosY
 
-	if a == 1
-		@img_next.draw
-		@img_end.draw
-		@img_title.draw
-	end
+    if a == 1
+      @img_next.draw
+      @img_end.draw
+      @img_title.draw
+    end
 	
-	if @start_x > -800 then
-	@start_x = @start_x -20
-	end
+    @start_x = @start_x -20 if @start_x > -800
   end
 
   
   def play
     Scene.set_scene(:game) if Input.keyPush?(K_SPACE)
-    Sprite.update(@items1)
-    Sprite.update(@items2)
+    Sprite.update([@items1, @item2, @mayor, @bullet])
+    Sprite.draw([@items1, @item2, @mayor, @bullet])
+    Sprite.clean([@items1,@items2,@bullets])
     Window.draw(0, 0, @bg_img)
     Window.draw(25,25, @img_shimane)
     Window.draw(450, 25, @img_enemy)
-    
-	Window.draw(@start_x,@start_y,@start)
 
-    Sprite.draw(@items1)	
-    Sprite.draw(@items2)
     self.add_item
-    Sprite.clean(@items1)
-    Sprite.clean(@items2)
+
 
     @citizen1.update
     @citizen2.update
@@ -108,22 +110,23 @@ class Game
     @citizen4.update
 
 
-    if Input.keyDown?(K_Y)
-	  @a = 1
-    end
+    #中段メニュー表示処理
+    @a = 1 if Input.keyDown?(K_Y)
 
-
+    #玉を飛ばす処理
+    @bullets = [Bullet.new(@mayor.x, @mayor.y, 0.0, Window.height,0.0, Window.width/2)] if Input.mouseDown?(M_LBUTTON)
+    
     #コンティニューとENDボタン、擬似ポインタの表示
-	self.update(@a)
+    self.update(@a)
     @pt.draw
-	Window.draw(@start_x,@start_y,@start)
+    Window.draw(@start_x,@start_y,@start)
 
     #ボタン処理（次の画面への遷移）
- 	if Input.mouseDown?(M_LBUTTON) then
+    if Input.mouseDown?(M_LBUTTON) then
       Scene.set_scene(:game) unless @pt.check([@img_next]).empty?
-	  Scene.finish unless @pt.check(@img_end).empty?
-	  Scene.set_scene(:title) unless @pt.check([@img_title]).empty?
+      Scene.finish unless @pt.check(@img_end).empty?
+      Scene.set_scene(:title) unless @pt.check([@img_title]).empty?
     end
-
+    
   end
 end

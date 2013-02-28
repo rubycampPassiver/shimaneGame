@@ -46,23 +46,22 @@ class Citizen < Sprite
 	def update
 		self.draw
 		if @isItemTrue
+#        if true
 			move
 		end
-
-
-        
-
-
-
 		@vanished = true if self.y >= Window.height - 325
 	end
 
 	def move
-#		if @witch == true # trueなら、現在位置が左のウィンドウ
-        if true
+		if @witch == true # trueなら、現在位置が左のウィンドウ
 			self.x += 5 # 右のウィンドウへ移動する.-----------------------5はスピードのこと。
 		else self.x -= 5 # 左のウィンドウに移動する.
 		end
+	end
+
+	def getItem
+
+
 	end
 
 	def vanished?
