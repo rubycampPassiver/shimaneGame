@@ -42,7 +42,8 @@ class Game
     item_array_size = 12
     
     if (@items1.size <= item_array_size) and (0 < (rand(100.0)+1.0).abs and (rand(100.0)+1.0).abs < 1.5)
-      x_origin, y_origin = 0+30+ rand(200),15
+      x_origin = (25..375).to_a.shuffle.first
+      y_origin = 15
       case rand(4)
       when 3 then tmp = Crab.new(x_origin,y_origin)
       when 2 then tmp = Camel.new(x_origin,y_origin)
@@ -52,7 +53,8 @@ class Game
     end	
     
     if (@items2.size <= item_array_size) and (0 < (rand(100.0)+1.0).abs and (rand(100.0)+1.0).abs < 1.5)
-      x_origin, y_origin = Window.width/2+30+rand(200)-150,15
+      x_origin = (475..(Window.width - 25)).to_a.shuffle.first
+      y_origin = 15
       case rand(4)
       when 3 then @items2 << Crab.new(x_origin, y_origin)
       when 2 then @items2 << Camel.new(x_origin, y_origin)
@@ -87,7 +89,7 @@ class Game
     Window.draw(456,456,@citizen)
     Window.draw(680,456,@citizen)
     
-    Sprite.draw(@items1)	
+    Sprite.draw(@items1)
     Sprite.draw(@items2)
     self.add_item
     Sprite.clean(@items1)

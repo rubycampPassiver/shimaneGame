@@ -5,7 +5,7 @@ class Crab < Item
   
   #デフォルトコンストラクタ
   def initialize(x,y)
-    img = Image.load(File.expand_path("../../image/crab.png", __FILE__))
+    img = Image.load(File.expand_path("../../image/fall_item/kani.png", __FILE__))
     img.setColorKey([255,255,255])
     super(x,y,img)
     @point = 50

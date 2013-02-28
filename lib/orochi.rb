@@ -5,7 +5,7 @@ class Orochi < Item
   
   #デフォルトコンストラクタ
   def initialize(x,y)
-    img = Image.load(File.expand_path("../../image/orochi.png", __FILE__))
+    img = Image.load(File.expand_path("../../image/fall_item/yamata.png", __FILE__))
     img.setColorKey([255,255,255])
     super(x,y,img)
     @point = -30
