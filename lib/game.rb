@@ -15,6 +15,7 @@ class Game
       imgname = 'bg_alljp.png'
     end
     @bg_img = Image.load("image/game_bg.png")
+	@start = Image.load("image/kaishi.png")
     @img_shimane = Image.load("image/shimane.png")
     @img_enemy = Image.load("image/"+imgname)
     @tiji   = Image.load("image/tiji.png")
@@ -30,6 +31,8 @@ class Game
 		y = Input.mousePosY
 	end
 	@a = 0
+	@start_x = 800
+	@start_y = 0
 
 	#スプライトクラスのオブジェクトを設定（ボタン、擬似クリック用ポインタ）
     @img_next = Sprite.new(275,250, Image.load(File.expand_path("../../image/next.png", __FILE__)))
@@ -69,9 +72,13 @@ class Game
 	@pt.y = Input.mousePosY
 
 	if a == 1
-	@img_next.draw
-	@img_end.draw
-	@img_title.draw
+		@img_next.draw
+		@img_end.draw
+		@img_title.draw
+	end
+	
+	if @start_x > -800 then
+	@start_x = @start_x -20
 	end
   end
 
@@ -80,7 +87,6 @@ class Game
     Scene.set_scene(:game) if Input.keyPush?(K_SPACE)
     Sprite.update(@items1)
     Sprite.update(@items2)
-   
     Window.draw(0, 0, @bg_img)
     Window.draw(25,25, @img_shimane)
     Window.draw(450, 25, @img_enemy)
@@ -89,7 +95,9 @@ class Game
     Window.draw(456,456,@citizen)
     Window.draw(680,456,@citizen)
     
+
     Sprite.draw(@items1)
+
     Sprite.draw(@items2)
     self.add_item
     Sprite.clean(@items1)
@@ -104,6 +112,7 @@ class Game
     #コンティニューとENDボタン、擬似ポインタの表示
 	self.update(@a)
     @pt.draw
+	Window.draw(@start_x,@start_y,@start)
 
     #ボタン処理（次の画面への遷移）
  	if Input.mouseDown?(M_LBUTTON) then
