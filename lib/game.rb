@@ -18,26 +18,10 @@ class Game
     @img_shimane = Image.load("image/shimane.png")
     @img_enemy = Image.load("image/"+imgname)
     @tiji   = Image.load("image/tiji.png")
-
 	@item_img = Image.load("./image/fall_item/kani.png").setColorKey([0, 255, 0])
 	@item_img2 = Image.load("./image/fall_item/yamata.png").setColorKey([0, 255, 0]) # i_okane.png, i_shijimi.png‚ð’Ç‰Á‚µ‚½‚¢.
 	@item_img3 = Image.load("./image/fall_item/rakuda.png").setColorKey([0, 255, 0])
-
-	when CHUGOKU
-	imgname = 'bg_chugoku.png'
-	when WESTJP
-	imgname = 'bg_westjp.png'
-	when ALLJP
-	imgname = 'bg_alljp.png'
-   end
-
-    @bg_img = Image.load("image/game_bg.png")
-    @img_shimane = Image.load("image/shimane.png")
-    @img_enemy = Image.load("image/"+imgname)
     @citizen   = Image.load("image/citizen.png")
-    @item_img = Image.load("./image/tiji.png")
-	@item_img2 = Image.load("./image/win.png")
-	@item_img3 = Image.load("./image/lose.png")
 	@items1 = []
 	@items2 = []
 
