@@ -18,6 +18,7 @@ require_relative 'lib/crab'
 require_relative 'lib/camel'
 require_relative 'lib/orochi'
 require_relative 'lib/pear'
+require_relative 'lib/citizen'
 require_relative 'mayor'
 
 #シーンのインスタンス化と命名

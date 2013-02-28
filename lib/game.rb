@@ -16,23 +16,29 @@ class Game
       when WESTJP then imgname = 'bg_westjp.png'
       when ALLJP then imgname = 'bg_alljp.png'
     end
-    @bg_img = Image.load("image/game_bg.png") #一番背景の画像
-    @start = Image.load("image/kaishi.png") #開始用アニメ画像
-    @img_shimane = Image.load("image/shimane.png") #背景（島根）
-    @img_enemy = Image.load("image/"+imgname) #背景（相手県）
-    @tiji   = Image.load("image/tiji.png") #知事
+    @bg_img = Image.load("image/game_bg.png")
+	@start = Image.load("image/kaishi.png")
+    @img_shimane = Image.load("image/shimane.png")
+    @img_enemy = Image.load("image/"+imgname)
+    @tiji   = Image.load("image/tiji.png")
     @mayor = Mayor.new #視聴
     @bullet = nil #
     @citizen   = Image.load("image/citizen.png") #市民
-    @item_img = Image.load("./image/fall_item/kani.png").setColorKey([0, 255, 0]) #アイテム（カニ）
-    @item_img2 = Image.load("./image/fall_item/yamata.png").setColorKey([0, 255, 0]) #アイテム（やまたのおろち）
-    @item_img3 = Image.load("./image/fall_item/rakuda.png").setColorKey([0, 255, 0]) #アイテム（らくだ）
-    @items1 = [] #アイテム群1
-    @items2 = [] #アイテム群2
     
-    @a = 0
-    @start_x = 800
-    @start_y = 0
+	@item_img = Image.load("./image/fall_item/kani.png").setColorKey([0, 255, 0])
+	@item_img2 = Image.load("./image/fall_item/yamata.png").setColorKey([0, 255, 0]) # i_okane.png, i_shijimi.pngを追加したい.
+	@item_img3 = Image.load("./image/fall_item/rakuda.png").setColorKey([0, 255, 0])
+  #  @citizen   = Image.load("image/citizen.png") #この画像はクラスに変更したので不要.
+	@items1 = []
+	@items2 = []
+
+	if Input.mouseDown?(M_LBUTTON) then
+		x = Input.mousePosX
+		y = Input.mousePosY
+	end
+	@a = 0
+	@start_x = 800
+	@start_y = 0
 
     #スプライトクラスのオブジェクトを設定（ボタン、擬似クリック用ポインタ）
     @img_next = Sprite.new(275,250, Image.load(File.expand_path("../../image/next.png", __FILE__)))
@@ -40,7 +46,10 @@ class Game
     @img_title = Sprite.new(275,350, Image.load(File.expand_path("../../image/img_title.png", __FILE__)))
     x, y = Input.mousePosX, Input.mousePosY if Input.mouseDown?(M_LBUTTON) 
     @pt = Sprite.new(x,y, Image.load(File.expand_path("../../image/pt_1.png", __FILE__)))
-    
+    @citizen1 = Citizen.new(40, true)
+    @citizen2 = Citizen.new(255, true)
+    @citizen3 = Citizen.new(460, false)
+    @citizen4 = Citizen.new(680, false)
   end
 
   # 出現アイテムを配列に追加
@@ -84,12 +93,17 @@ class Game
     Window.draw(0, 0, @bg_img)
     Window.draw(25,25, @img_shimane)
     Window.draw(450, 25, @img_enemy)
-    Window.draw( 31,456,@citizen)
-    Window.draw(255,456,@citizen)
-    Window.draw(456,456,@citizen)
-    Window.draw(680,456,@citizen)
     Scene.set_scene(:game) if Input.keyPush?(K_SPACE) #ESCでトップへ戻る
     self.add_item #アイテム追加
+
+
+    @citizen1.update
+    @citizen2.update
+    @citizen3.update
+    @citizen4.update
+
+    #玉を飛ばす処理
+    @bullets = [Bullet.new(@mayor.x, @mayor.y, 0.0, Window.height,0.0, Window.width/2)] if Input.mouseDown?(M_LBUTTON)
     
     #中断メニュー表示処理
     @a = 1 if Input.keyDown?(K_Y) 
