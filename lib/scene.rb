@@ -22,10 +22,7 @@ class Scene
   end
   
   def self.set_finish(b)
-    @@finish = f
+    @@finish = b
   end
   
-  #  def self.tofinish()
-  #    @@finish = true
-  #  end
 end

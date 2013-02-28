@@ -9,20 +9,25 @@ class Level
   def initialize
     
     downpx = 150
+      
     @bg_img=Image.load(File.expand_path("../../image/title.png", __FILE__))#背景画像
     @level_title = "対戦レベル"#タイトル文
     prefimg = Image.load(File.expand_path("../../image/pref_tottori.png", __FILE__))
-    @pref=Sprite.new((Window.width-prefimg.width)/2-200,Window.height/2+downpx,prefimg)#県のイメージ
+    @chugoku=Sprite.new((Window.width-prefimg.width)/2-200,Window.height/2+downpx,prefimg)#県のイメージ
     distimg = Image.load(File.expand_path("../../image/dist_chugoku.png", __FILE__))
-    @dist=Sprite.new((Window.width-distimg.width)/2,Window.height/2+downpx,distimg)#地方のイメージ
+    @westjp=Sprite.new((Window.width-distimg.width)/2,Window.height/2+downpx,distimg)#地方のイメージ
     jpimg = Image.load(File.expand_path("../../image/all_japan.png", __FILE__))
     @alljp=Sprite.new((Window.width-jpimg.width)/2+200,Window.height/2+downpx,jpimg)#全国のイメージ
+    back = Image.load(File.expand_path("../../image/back.png", __FILE__))
+    @back=Sprite.new(Window.width-back.width,Window.height-back.height,back)#戻るボタン
+    @back.scale_x = 0.5#スケール調整(幅)
+    @back.scale_y = 0.5#スケール調整(高さ)
     @pt=Sprite.new(0,0,Image.load(File.expand_path("../../image/pt_1.png", __FILE__)))#擬似クリックのための小さなビットマップ
+    
   end
   
   def play
-    
-    Scene.set_scene(:Game_tottori) if Input.keyPush?(K_SPACE)#終了条件
+    Scene.set_scene(:title) if Input.keyPush?(K_SPACE)#終了条件
     Window.draw(0,0,@bg_img)#バックグラウンドセット
     click = Input.mouseDown?(M_LBUTTON) ? true : false    
     
@@ -32,19 +37,17 @@ class Level
     
     #各スプライトの描画
     Sprite.draw(@pt)#
-    Sprite.draw(@pref)#
-    Sprite.draw(@dist)#
+    Sprite.draw(@chugoku)#
+    Sprite.draw(@westjp)#
     Sprite.draw(@alljp)#
+    Sprite.draw(@back)#
     
     #ボタン処理（次の画面への遷移）
     if click then 
-      Scene.set_scene(:tottori) unless @pt.check([@pref]).empty?
-      Scene.set_scene(:osaka) unless @pt.check([@dist]).empty?
-      Scene.set_scene(:tokyo) unless @pt.check([@alljp ]).empty?
+      Scene.set_scene(:chugoku) unless @pt.check([@chugoku]).empty?
+      Scene.set_scene(:westjp) unless @pt.check([@westjp]).empty?
+      Scene.set_scene(:alljp) unless @pt.check([@alljp]).empty?
+      Scene.set_scene(:title) unless @pt.check([@back]).empty?
     end
-    #    puts "hit pref!" if Sprite.check(@pt,@pref) unless  @smbit.check([@pref]).empty?
-    #    puts "hit dist!" if Sprite.check(@pt,@dist) unless @smbit.check([@dist]).empty?
-    #    puts "hit jp!" if Sprite.check(@pt,@alljp) unless @smbit.check([@alljp ]).empty?
-    
   end
 end
