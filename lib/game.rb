@@ -10,7 +10,7 @@ class Game
   def initialize(modeint)
     
     #各モードに合わせて背景を変更
-    imgname
+    imgname = nil
     case modeint
     when CHUGOKU then imgname = 'bg_chugoku.png'
     when WESTJP then imgname = 'bg_westjp.png'
