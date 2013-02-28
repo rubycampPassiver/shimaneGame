@@ -25,7 +25,7 @@ class Game
     @img_enemy = Image.load("image/"+imgname)
     @tiji   = Image.load("image/tiji.png")
     @item_img = Image.load("./image/fall_item/kani.png").setColorKey([0, 255, 0])
-		@item_img2 = Image.load("./image/fall_item/yamata.png").setColorKey([0, 255, 0])
+		@item_img2 = Image.load("./image/fall_item/yamata.png").setColorKey([0, 255, 0]) # i_okane.png, i_shijimi.png‚ð’Ç‰Á‚µ‚½‚¢.
 		@item_img3 = Image.load("./image/fall_item/rakuda.png").setColorKey([0, 255, 0])
 		@items1 = []
 		@items2 = []
