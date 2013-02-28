@@ -9,8 +9,8 @@ class Game
   #デフォルトコンストラクタ
   def initialize(modeint)
     
-    #書くモードに合わせて背景を変更
-    imgname = ''
+    #各モードに合わせて背景を変更
+    imgname
     case modeint
     when CHUGOKU then imgname = 'bg_chugoku.png'
     when WESTJP then imgname = 'bg_westjp.png'
@@ -21,22 +21,16 @@ class Game
     @img_shimane = Image.load("image/shimane.png")
     @img_enemy = Image.load("image/"+imgname)
     @tiji   = Image.load("image/tiji.png")
-    @mayor = Mayor.new #視聴
-    @bullet = nil #
-    @citizen   = Image.load("image/citizen.png") #市民
+    @mayor = Mayor.new #市長
+    @citizens = []#市民たち
     
     @item_img = Image.load("./image/fall_item/kani.png").setColorKey([0, 255, 0])
     @item_img2 = Image.load("./image/fall_item/yamata.png").setColorKey([0, 255, 0]) # i_okane.png, i_shijimi.pngを追加したい.
     @item_img3 = Image.load("./image/fall_item/rakuda.png").setColorKey([0, 255, 0])
-    #  @citizen   = Image.load("image/citizen.png") #この画像はクラスに変更したので不要.
-    @items1 = []#味方のアイテム
-    @items2 = []#敵側のアイテム
-    @citizens = []#市民達
+    @items1 = []#味方のアイテム群
+    @items2 = []#敵側のアイテム群
+    @bullet = nil #弾丸
     
-    if Input.mouseDown?(M_LBUTTON) then
-      x = Input.mousePosX
-      y = Input.mousePosY
-    end
     @a = 0
     @start_x = 800
     @start_y = 0
@@ -48,9 +42,16 @@ class Game
     x, y = Input.mousePosX, Input.mousePosY if Input.mouseDown?(M_LBUTTON) 
     @pt = Sprite.new(x,y, Image.load(File.expand_path("../../image/pt_1.png", __FILE__)))
     @citizens << Citizen.new(40, true)
+    @citizens << Citizen.new(100, true)
+    @citizens << Citizen.new(150, true)
     @citizens << Citizen.new(255, true)
     @citizens << Citizen.new(460, false)
+    @citizens << Citizen.new(500, false)
+    @citizens << Citizen.new(600, false)
     @citizens << Citizen.new(680, false)
+    
+    Item.resetpoint
+    
   end
 
   # 出現アイテムを配列に追加
@@ -125,11 +126,16 @@ class Game
   end
 
   def play
+    #ESCでトップへ戻る
+    Scene.set_scene(:game) if Input.keyPush?(K_SPACE) 
+    
+    #背景などの描画
     Window.draw(0, 0, @bg_img)
     Window.draw(25,25, @img_shimane)
     Window.draw(450, 25, @img_enemy)
-    Scene.set_scene(:game) if Input.keyPush?(K_SPACE) #ESCでトップへ戻る
-    self.add_item #アイテム追加
+    
+    #アイテム追加
+    self.add_item
 
     #玉を飛ばす処理
     @bullets = [Bullet.new(@mayor.x, @mayor.y, 0.0, Window.height,0.0, Window.width/2)] if Input.mouseDown?(M_LBUTTON)
@@ -152,18 +158,22 @@ class Game
       # 通常のマウスクリックイベント(玉生成)
       @bullets = [Bullet.new(@mayor.x, @mayor.y, 0.0, Window.height,0.0, Window.width/2)] if Input.mouseDown?(M_LBUTTON) 
     end
+    
     #玉とアイテムの衝突判定
     Sprite.check(@bullets, @items1)
     Sprite.check(@bullets, @items2)
+    
     #アイテムと市民の衝突判定
     Sprite.check(@items1, @citizens)
     Sprite.check(@items2, @citizens)
+    
+    #ポイント描画
+    Window.drawFont(50,50, Item.get_friendpoint.to_s + "万人", Font.new(24))
     
     #アップデート、ドロー、クリア
     Sprite.update([@items1, @item2, @mayor, @bullets, @citizens])
     Sprite.draw([@items1, @item2, @mayor, @bullets])
     Sprite.clean([@items1,@items2,@bullets])
-
     
   end
 end

@@ -3,18 +3,14 @@
 #市民を表すクラス
 class Citizen < Sprite
   
-  #クラス変数群
-  #  @@img = Image.load(File.expand_path("../../image/citizen.png", __FILE__))#バックグラウンド画像
-  #  @@py = 456#固定
-
-  #  @@pos[0, 0, 0, 0]
-
   #インスタンス変数群
   @travering = false
   @isItemTrue = false # 要求したアイテムが正しいか。　（正しくなかったら隣の県にいってしまう？？
   @px = 100
   @witch = false # false => leftWindow : true = > RightWindow
-
+  
+  attr_accessor :requirement
+  
   #デフォルトコンストラクタ
 	def initialize(x, witch) 
 		self.image = Image.load(File.expand_path("../../image/citizen.png", __FILE__))#本体の画像
@@ -26,32 +22,32 @@ class Citizen < Sprite
 		self.x = @px
 		self.y = @py
     
-    @requirement = getitemrandom
-    #self.draw(@px,@@py,@@img.setColorKey([255,255,255]))#citizenの画像を読んで透過処理＋背後と合成
-    # @x_speed = 1#@@default_y_speed 
-    # @x_direction = 1#@@default_x_speed
+    @requirement = getitemrandom #要求アイテムの設定
+    
 	end
-
+  
 	def update
-		self.draw
-		if @isItemTrue
-      #        if true
-			move
-		end
+    self.draw
+    @requirement.update
+		@requirement.draw
+		move if @isItemTrue
 		@vanished = true if self.y >= Window.height - 325
 	end
 
 	def move
-		if @witch == true # trueなら、現在位置が左のウィンドウ
-			self.x += 5 # 右のウィンドウへ移動する.-----------------------5はスピードのこと。
-		else self.x -= 5 # 左のウィンドウに移動する.
+		if @witch # trueなら、現在位置が左のウィンドウ
+			self.x -= 5 # 左のウィンドウへ移動する.-----------------------5はスピードのこと。
+		else self.x += 5 # 右のウィンドウに移動する.
 		end
 	end
 
   #衝突判定
 	def hit(obj)
     if obj.is_a?(Item) then #アイテムとの衝突の場合
-      
+      if requirement.is_a?(obj.class) then #要求と同じアイテムの場合
+        @isItemTrue = true
+        Item.add_friendpoint(obj.point)
+      end
     end
 	end
 
@@ -61,14 +57,23 @@ class Citizen < Sprite
   
   #要求アイテムをランダムに発生させる
   def getitemrandom
-    posarr = []
+    #確率に応じたアイテム生成
+    posarr = [40,40,20]
+    flag = rand(posarr.inject{|sum, n| sum + n })
     sum = 0.0
-    flag = rand(100.0)
+    count = 1
+    
     posarr.each do |item|
       sum += item
-      if flag < sum then
-        
-      end
+      break if flag < sum
+      count += 1
     end
+    tmp = nil
+    case count
+    when 1 then tmp = Shijimi.new(self.x,self.y+100)
+    when 2 then tmp = Money.new(self.x,self.y+100)
+    else tmp = Orochi.new(self.x,self.y+100)
+    end
+    return tmp
   end
 end
