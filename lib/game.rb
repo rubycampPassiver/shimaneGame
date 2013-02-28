@@ -39,6 +39,8 @@ class Game
 	@img_end = Sprite.new(275,450, Image.load(File.expand_path("../../image/end.png", __FILE__)))
 	@img_title = Sprite.new(275,350, Image.load(File.expand_path("../../image/img_title.png", __FILE__)))
     @pt = Sprite.new(x,y, Image.load(File.expand_path("../../image/pt_1.png", __FILE__)))
+
+    @citizen = Citizen.new(100, true)
   end
 
   def add_item
@@ -101,6 +103,7 @@ class Game
     Sprite.clean(@items1)
     Sprite.clean(@items2)
 
+    @citizen.update
 
     if Input.keyDown?(K_Y)
 	  @a = 1

@@ -18,6 +18,7 @@ require_relative 'lib/crab'
 require_relative 'lib/camel'
 require_relative 'lib/orochi'
 require_relative 'lib/pear'
+require_relative 'lib/citizen'
 
 #シーンのインスタンス化と命名
 Scene.add_scene(:title,  Title.new)
