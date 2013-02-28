@@ -70,6 +70,11 @@ class Game
     Sprite.draw(@items1)	
     Sprite.draw(@items2)
     self.add_item
+    
+    if Input.mouseDown?(M_LBUTTON) then
+      
+    end
+    
     Sprite.clean(@items1)
     Sprite.clean(@items2)
   end
