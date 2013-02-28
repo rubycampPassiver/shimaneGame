@@ -58,7 +58,8 @@ class Citizen < Sprite
 	end
 
 	def move
-		if @witch == true # trueなら、現在位置が左のウィンドウ
+#		if @witch == true # trueなら、現在位置が左のウィンドウ
+        if true
 			self.x += 5 # 右のウィンドウへ移動する.-----------------------5はスピードのこと。
 		else self.x -= 5 # 左のウィンドウに移動する.
 		end

@@ -22,7 +22,7 @@ class Game
 	@item_img = Image.load("./image/fall_item/kani.png").setColorKey([0, 255, 0])
 	@item_img2 = Image.load("./image/fall_item/yamata.png").setColorKey([0, 255, 0]) # i_okane.png, i_shijimi.pngを追加したい.
 	@item_img3 = Image.load("./image/fall_item/rakuda.png").setColorKey([0, 255, 0])
-    @citizen   = Image.load("image/citizen.png")
+  #  @citizen   = Image.load("image/citizen.png") #この画像はクラスに変更したので不要.
 	@items1 = []
 	@items2 = []
 
@@ -40,7 +40,10 @@ class Game
 	@img_title = Sprite.new(275,350, Image.load(File.expand_path("../../image/img_title.png", __FILE__)))
     @pt = Sprite.new(x,y, Image.load(File.expand_path("../../image/pt_1.png", __FILE__)))
 
-    @citizen = Citizen.new(100, true)
+    @citizen1 = Citizen.new(40, true)
+    @citizen2 = Citizen.new(255, true)
+    @citizen3 = Citizen.new(460, false)
+    @citizen4 = Citizen.new(680, false)
   end
 
   def add_item
@@ -90,10 +93,6 @@ class Game
     Window.draw(0, 0, @bg_img)
     Window.draw(25,25, @img_shimane)
     Window.draw(450, 25, @img_enemy)
-    Window.draw( 31,456,@citizen)
-    Window.draw(255,456,@citizen)
-    Window.draw(456,456,@citizen)
-    Window.draw(680,456,@citizen)
     
 	Window.draw(@start_x,@start_y,@start)
 
@@ -103,7 +102,11 @@ class Game
     Sprite.clean(@items1)
     Sprite.clean(@items2)
 
-    @citizen.update
+    @citizen1.update
+    @citizen2.update
+    @citizen3.update
+    @citizen4.update
+
 
     if Input.keyDown?(K_Y)
 	  @a = 1
