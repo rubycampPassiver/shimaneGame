@@ -40,8 +40,10 @@ class Game
     @img_title = Sprite.new(275,350, Image.load(File.expand_path("../../image/img_title.png", __FILE__)))
     x, y = Input.mousePosX, Input.mousePosY if Input.mouseDown?(M_LBUTTON) 
     @pt = Sprite.new(x,y, Image.load(File.expand_path("../../image/pt_1.png", __FILE__)))
+    
   end
 
+  # 出現アイテムを配列に追加
   def add_item
     item_array_size = 12
     
@@ -70,22 +72,15 @@ class Game
   #擬似ポインタをクリック先に移動
   def update(a)
     @pt.x, @pt.y = Input.mousePosX, Input.mousePosY
-
     if a == 1
       @img_next.draw
       @img_end.draw
       @img_title.draw
     end
-	
     @start_x = @start_x -20 if @start_x > -800
   end
 
-  
   def play
-    Scene.set_scene(:game) if Input.keyPush?(K_SPACE)
-    Sprite.update([@items1, @item2, @mayor, @bullet])
-    Sprite.draw([@items1, @item2, @mayor, @bullet])
-    Sprite.clean([@items1,@items2,@bullets])
     Window.draw(0, 0, @bg_img)
     Window.draw(25,25, @img_shimane)
     Window.draw(450, 25, @img_enemy)
@@ -93,26 +88,38 @@ class Game
     Window.draw(255,456,@citizen)
     Window.draw(456,456,@citizen)
     Window.draw(680,456,@citizen)
-
-    self.add_item
-
-    #中段メニュー表示処理
-    @a = 1 if Input.keyDown?(K_Y)
-
-    #玉を飛ばす処理
-    @bullets = [Bullet.new(@mayor.x, @mayor.y, 0.0, Window.height,0.0, Window.width/2)] if Input.mouseDown?(M_LBUTTON)
+    Scene.set_scene(:game) if Input.keyPush?(K_SPACE) #ESCでトップへ戻る
+    self.add_item #アイテム追加
+    
+    #中断メニュー表示処理
+    @a = 1 if Input.keyDown?(K_Y) 
+    self.update(@a)
     
     #コンティニューとENDボタン、擬似ポインタの表示
-    self.update(@a)
     @pt.draw
     Window.draw(@start_x,@start_y,@start)
-
+    
     #ボタン処理（次の画面への遷移）
     if Input.mouseDown?(M_LBUTTON) then
+      # 中断メニューが出ている時のマウスクリックイベント
       Scene.set_scene(:game) unless @pt.check([@img_next]).empty?
       Scene.finish unless @pt.check(@img_end).empty?
       Scene.set_scene(:title) unless @pt.check([@img_title]).empty?
+      
+      # 通常のマウスクリックイベント(玉生成)
+      @bullets = [Bullet.new(@mayor.x, @mayor.y, 0.0, Window.height,0.0, Window.width/2)] if Input.mouseDown?(M_LBUTTON) 
     end
+    #玉とアイテムの衝突判定
+    Sprite.check(@bullets, @items1)
+    Sprite.check(@bullets, @items2)
+    #アイテムと人の衝突判定
+    Sprite.check(@items1, @citizen)
+    Sprite.check(@items2, @citizen)
+    
+    Sprite.update([@items1, @item2, @mayor, @bullets])
+    Sprite.draw([@items1, @item2, @mayor, @bullets])
+    Sprite.clean([@items1,@items2,@bullets])
+
     
   end
 end

@@ -17,6 +17,7 @@ class Item < Sprite
   attr_reader :ballon
   
   
+	attr_reader :falling
   
   #インスタンス変数群
 	attr_accessor :point#アイテムの得点
@@ -32,52 +33,73 @@ class Item < Sprite
 		super(x,y,img2)#合成画像を使ってスーパーコンストラクタ呼び出し
     @x_speed = 1#@@default_y_speed 
     @x_direction = 1#@@default_x_speed
+    
+    @falling = false
+    @ay =0
 	end
 
 	def update
-		self.y += 0.2 #全体を下へ下げる
+    # 蛇行（通常の）落下中
+    if not @falling then 
+      self.y += 0.2 #全体を下へ下げる
     
-		if self.x <= 385
-			if (self.x >= 380-self.image.width)||(self.x <= 15)
-				if (self.y <= Window.height - 400)||(self.x >= 380-self.image.width)
-					@x_speed = 0
-					@x_direction *= -1
-				end
+      if self.x <= 385
+        if (self.x >= 380-self.image.width)||(self.x <= 15)
+          if (self.y <= Window.height - 400)||(self.x >= 380-self.image.width)
+            @x_speed = 0
+            @x_direction *= -1
+          end
 
-				if self.x >= 380-self.image.width
-					self.x -= 1
-				end
+          if self.x >= 380-self.image.width
+            self.x -= 1
+          end
 
-				if self.y <= Window.height - 400
-					if self.x <= 15
-						self.x += 1
-					end
-				end
-			end
-		else
-			if (self.x >= Window.width - self.image.width)||(self.x <= Window.width - 360)
-				if (self.y <= Window.height - 400)||(self.x <= Window.width - 360)
-					@x_speed = 0
-					@x_direction *= -1
-				end
+          if self.y <= Window.height - 400
+            if self.x <= 15
+              self.x += 1
+            end
+          end
+        end
+      else
+        if (self.x >= Window.width - self.image.width)||(self.x <= Window.width - 360)
+          if (self.y <= Window.height - 400)||(self.x <= Window.width - 360)
+            @x_speed = 0
+            @x_direction *= -1
+          end
 
-				if self.x >= Window.width - self.image.width
-					self.x -= 1
-				end
+          if self.x >= Window.width - self.image.width
+            self.x -= 1
+          end
 
-				if self.x <= Window.width - 360
-					self.x += 1
-				end
-			end
-		end
+          if self.x <= Window.width - 360
+            self.x += 1
+          end
+        end
+      end
 
-		@x_speed += 0.04
-		self.x += (@x_speed*@x_direction)
-		@vanished = true if self.y >= Window.height - 350
+      @x_speed += 0.04
+      self.x += (@x_speed*@x_direction)
+      @vanished = true if self.y >= Window.height - 350
+    
+    #玉に当たってからの落下中
+    else
+      @ay += 0.3 #落下加速度
+      self.y += @ay #位置計算
+    end
 	end
 
 	def vanished?
 		return @vanished
 	end
+  
+  def hit(bullet)
+    @falling = true
+  end
+  
+  def shot(citizen)
+    @vanished = true
+    p "self.point"
+    p self.point
+  end
 
 end
