@@ -5,7 +5,7 @@ class Pear < Item
   
   #デフォルトコンストラクタ
   def initialize(x,y)
-    img = Image.load(File.expand_path("../../image/pear.png", __FILE__))
+    img = Image.load(File.expand_path("../../image/fall_item/nashi.png", __FILE__))
     img.setColorKey([255,255,255])
     super(x,y,img)
     @point = 10

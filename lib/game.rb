@@ -23,7 +23,7 @@ class Game
     @img_shimane = Image.load("image/shimane.png")
     @img_enemy = Image.load("image/"+imgname)
     @mayor = Mayor.new(135,392) #市長
-    @agent = Enemy.new(550,392)
+    @agent = EnemyMayor.new(550,392) #敵市長
 
     @citizens = []#市民たち
     
@@ -62,7 +62,7 @@ class Game
     @img_end = Sprite.new(275,450, Image.load(File.expand_path("../../image/end.png", __FILE__)))
     @img_title = Sprite.new(275,350, Image.load(File.expand_path("../../image/img_title.png", __FILE__)))
     @pt = Sprite.new(x,y, Image.load(File.expand_path("../../image/pt_1.png", __FILE__)))
-    @count_timer = 180
+    @count_timer = 30
     @click = 0
   end
 
@@ -93,11 +93,10 @@ class Game
       end
       
       @items1 << tmp
-    end	
+    end
     
     if (@items2.size <= @item_array_size) and (0 < (rand(100.0)+1.0).abs and (rand(100.0)+1.0).abs < 1.5)
-      x_origin = (475..(Window.width - 25)).to_a.shuffle.first
-      y_origin = 15
+      x_origin, y_origin = (475..(Window.width - 25)).to_a.shuffle.first,15
       
       #確率に応じたアイテム生成
       posarr = [40,40,20]
@@ -108,9 +107,7 @@ class Game
       #アイテム決定
       posarr.each do |e|  
         sum += e
-        if flag < sum then
-          break
-        end
+        break if flag < sum
         count += 1
       end
       tmp = nil
@@ -162,12 +159,8 @@ class Game
     Window.draw(450, 25, @img_enemy)
     
     #アイテム追加
-    self.add_itemruby main.r
-    @citizens.delete(item) if item.isItemTrue and (item.x < 0 or Window.width < item.x)
-    
-    #玉を飛ばす処理
-    @bullets = [Bullet.new(@mayor.x, @mayor.y, 0.0, Window.height,0.0, Window.width/2, false)] if Input.mouseDown?(M_LBUTTON)
-    @bullets_agent = [Bullet.new(@agent.x, @agent.y, 0.0, Window.height,0.0, Window.width/2, true)] if Input.mouseDown?(M_LBUTTON)
+    self.add_item
+    @citizens.each {|item| @citizens.delete(item) if item.isItemTrue and (item.x < 0 or Window.width < item.x)}
     
     #中断メニュー表示処理
     @a = 1 if Input.keyDown?(K_Y) 
@@ -177,6 +170,7 @@ class Game
     @pt.draw
     Window.draw(@start_x,@start_y,@start)
     
+    @bullets_agent = [Bullet.new(@agent.x, @agent.y, 0.0, Window.height-300, Window.width/2, Window.width, true)] if rand(25) == 2
     #ボタン処理（次の画面への遷移）
     if Input.mouseDown?(M_LBUTTON) then
       # 中断メニューが出ている時のマウスクリックイベント
@@ -186,8 +180,7 @@ class Game
       setup if @click == 1	
         
       # 通常のマウスクリックイベント(玉生成)
-      @bullets = [Bullet.new(@mayor.x, @mayor.y, 0.0, Window.height,0.0, Window.width/2)] if Input.mouseDown?(M_LBUTTON) 
-      @bullets_agent = [Bullet.new(@agent.x, @agent.y, 0.0, Window.height,0.0, Window.width/2)] if Input.mouseDown?(M_LBUTTON) 
+      @bullets = [Bullet.new(@mayor.x, @mayor.y, 0.0, Window.height,0.0, Window.width/2, false)] if Input.mouseDown?(M_LBUTTON) 
     end
     
     #玉とアイテムの衝突判定
@@ -202,8 +195,8 @@ class Game
     Window.drawFont(50,50, Item.get_friendpoint.to_s + "万人", Font.new(24))
     
     #アップデート、ドロー、クリア
-    Sprite.update([@items1, @item2, @mayor, @bullets, @citizens, @agent, @bullets_agent])
-    Sprite.draw([@items1, @item2, @mayor, @bullets, @agent, @bullets_agent])
-    Sprite.clean([@items1,@items2,@bullets])
+    Sprite.update([@items1, @items2, @mayor, @bullets, @citizens, @agent, @bullets_agent])
+    Sprite.draw([@items1, @items2, @mayor, @bullets, @agent, @bullets_agent])
+    Sprite.clean([@items1,@items2,@bullets, @bullets_agent])
   end
 end

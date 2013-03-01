@@ -63,7 +63,7 @@ class Item < Sprite
     self.scale_x = 0.5
     self.scale_y = 0.5
     
-#    Item.resetpoint
+    #    Item.resetpoint
 	end
 
 	def update
@@ -77,12 +77,8 @@ class Item < Sprite
             @x_speed = 0
             @x_direction *= -1
           end
-
           self.x -= 1 if self.x >= 380-self.image.width
-
-          if self.y <= Window.height - 400
-            self.x += 1 if self.x <= 15
-          end
+          self.x += 1 if self.x <= 15 if self.y <= Window.height - 400
         end
       else
         if (self.x >= Window.width - self.image.width)||(self.x <= Window.width - 360)

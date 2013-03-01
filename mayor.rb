@@ -3,7 +3,6 @@ class Mayor < Sprite
   
   #デフォルトコンストラクタ
   def initialize(x,y)
-    puts "できた"
     super(x,y,Image.load(File.expand_path("../image/tiji.png", __FILE__)))
     @dx = 0
   end

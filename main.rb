@@ -21,6 +21,7 @@ require_relative 'lib/pear'
 require_relative 'lib/shijimi'
 require_relative 'lib/money'
 require_relative 'lib/citizen'
+require_relative 'lib/enemy_mayor'
 require_relative 'mayor'
 require_relative 'enemy'
 
